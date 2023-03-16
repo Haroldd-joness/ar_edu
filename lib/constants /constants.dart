@@ -61,6 +61,16 @@ var kClasses = GoogleFonts.poppins(
   )
 );
 
+
+var kLogin = GoogleFonts.poppins(
+    textStyle: const TextStyle(
+        fontSize: 16,
+        color: kPrimaryText,
+        fontWeight: FontWeight.w500
+    )
+);
+
+
 ///chat background
 const kChatBot = Color(0xFF1DA1F2);
 const kChatBackground = Color(0Xfff4f3ff);

@@ -61,25 +61,9 @@ class _RegisterState extends State<Register> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 25,),
-                    ///phone
-                    TextFormField(
-                      keyboardType: TextInputType.phone,
-                      controller: _phoneController,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Contact',
-                        prefixIcon: Icon(CupertinoIcons.phone),
-                      ),
 
-                      ///form validationn
-                      validator: (value){
-                        if(value == null || value.isEmpty){
-                          return 'This field is required';
-                        }
-                        return null;
-                      },
-                    ),
+                    ///phone
+
                     const SizedBox(height: 25,),
                     ///password
                     TextFormField(

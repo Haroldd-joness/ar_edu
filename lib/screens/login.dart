@@ -2,6 +2,7 @@ import 'package:ar_edu/constants%20/constants.dart';
 import 'package:ar_edu/widgets/button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -29,12 +30,10 @@ class _LoginScreenState extends State<LoginScreen> {
               'Hello',
               style: kLoginText,
             ),
-          const Text(
+           Text(
             "Sign in to your account",
-            style: TextStyle(
-              color: kPrimaryTextColor,
-              fontSize: 16,
-            ),),
+            style: kLogin
+          ),
 
             Container(
               margin: const EdgeInsets.all(35),
@@ -75,6 +74,21 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
+                    const SizedBox(height: 10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                              onTap: () => print("clicked"),
+                            child:  Text("Forget password", style: GoogleFonts.poppins(
+                                fontSize: 14,
+                                color: kPriColor
+                            ),),
+
+                          )
+                        ],
+                    ),
+                    
                     const SizedBox(
                       height: 30,
                     ),
@@ -96,26 +110,43 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: kSecondaryColor,
                       ),
                     ),
-                    const SizedBox(
-                      height: 25,
+
+                     const SizedBox(height: 15,),
+                    Text("OR", style: GoogleFonts.poppins(
+                        fontSize: 15,
+                        color: kPrimaryTextColor
+                    ),),
+                    const SizedBox(height: 15,),
+                    GoogleSignIn(
+                      title: 'Sign-in with Google',
+                      height: 54,
+                      width: MediaQuery.of(context).size.width,
+                      color: kSecondaryColor,
+                      icon:
                     ),
+
+                    const SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("Don't have an account?"),
+                        Text("Don't have an account?", style: kLogin,),
                         const SizedBox(
                           width: 6,
                         ),
                         GestureDetector(
                           onTap: () => Navigator.pushReplacementNamed(
                               context, '/register'),
-                          child: const Text(
-                            'Sign up',
-                            style: TextStyle(color: kPrimaryColor),
+                          child:  Text(
+                              'Sign up',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 15,
+                                  color: kPriColor
+                              )
                           ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
+
                   ],
                 ),
               ),

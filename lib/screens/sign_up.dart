@@ -30,7 +30,13 @@ class _RegisterState extends State<Register> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('Create account', style: kLoginText,),
+            Text('Sign Up', style: kLoginText,),
+            const Text(
+              "Create an account",
+              style: TextStyle(
+                color: kPrimaryTextColor,
+                fontSize: 16,
+              ),),
             Container(
               margin: const EdgeInsets.all(35),
               child: Form(

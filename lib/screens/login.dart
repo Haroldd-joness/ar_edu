@@ -20,10 +20,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundPrimary,
-      body: SafeArea(
-        child: Column(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kBackgroundPrimary,
+        body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
@@ -74,7 +74,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         return null;
                       },
                     ),
-                    const SizedBox(height: 10,),
+                    const SizedBox(height: 5,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                         children: [
@@ -96,11 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       onTap: () {
                         ///return true if the form is valid || false otherwise
                         if (_formKey.currentState!.validate()) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text("success"),
-                            ),
-                          );
+                          Navigator.pushReplacementNamed(context, '/homePage');
                         }
                       },
                       child: SignUp(
@@ -116,13 +112,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         fontSize: 15,
                         color: kPrimaryTextColor
                     ),),
-                    const SizedBox(height: 15,),
+                    const SizedBox(height: 25,),
                     GoogleSignIn(
                       title: 'Sign-in with Google',
                       height: 54,
                       width: MediaQuery.of(context).size.width,
-                      color: kSecondaryColor,
-                      icon:
                     ),
 
                     const SizedBox(height: 20,),

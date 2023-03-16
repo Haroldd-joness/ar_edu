@@ -1,11 +1,11 @@
 
 import 'package:ar_edu/constants%20/constants.dart';
-import 'package:ar_edu/screens/scan.dart';
+import 'package:ar_edu/widgets/scan.dart';
 import 'package:ar_edu/widgets/class.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'chat.dart';
+import '../widgets/chat.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

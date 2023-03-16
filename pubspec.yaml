@@ -1,0 +1,56 @@
+name: ar_edu
+description: A mobile augemented reality elearning applicationn
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+
+dependencies:
+  chat_gpt_sdk:
+    git:
+      url: https://github.com/iampawan/Flutter-ChatGPT.git
+
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  google_fonts: ^4.0.3
+  connectivity_plus: ^3.0.3
+  flutter_launcher_icons: ^0.12.0
+  modal_bottom_sheet: ^2.1.2
+  firebase_auth: ^4.2.10
+  http: ^0.13.5
+  velocity_x: ^3.6.0
+  dotenv: ^4.1.0
+  flutter_dotenv: ^5.0.2
+  firebase_core: ^2.7.1
+
+dependency_overrides:
+  modal_bottom_sheet: ^3.0.0-pre
+
+flutter_icon:
+  android: true
+  ios: true
+  image_path: "assets/icon/icon.png"
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/
+

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import '../constants /api_key.dart';
 import '../models /chat_model.dart';
 import 'loading_indicator.dart';
 
@@ -18,29 +19,34 @@ class ChatPage extends StatefulWidget {
 }
 
 Future<String> generateResponse(String prompt) async {
-  const apiKey = "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";
+
 
   var url = Uri.https("api.openai.com", "/v1/completions");
   final response = await http.post(
     url,
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer $apiKey'
+      'Authorization': 'Bearer $apiKey',
+
     },
     body: jsonEncode({
       "model": "text-davinci-003",
       "prompt": prompt,
-      'temperature': 0,
-      'max_tokens': 2000,
-      'top_p': 1,
-      'frequency_penalty': 0.0,
-      'presence_penalty': 0.0,
+      "temperature": 0.9,
+      "max_tokens": 150,
+      "top_p": 1,
+      "frequency_penalty": 0,
+      "presence_penalty": 0.6,
+
+
     }),
   );
 
   // Do something with the response
-  Map<String, dynamic> newresponse = jsonDecode(response.body);
-  return newresponse['choices'][0]['text'];
+  Map<String, dynamic> newResponse = jsonDecode(response.body);
+  return newResponse["choices"][0]["text"];
+
+
 }
 
 class _ChatPageState extends State<ChatPage> {
@@ -89,27 +95,22 @@ class _ChatPageState extends State<ChatPage> {
       backgroundColor: kChatBackground,
       body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.all(25),
+          margin: const EdgeInsets.all(15),
           child: Column(
             children: [
-              Expanded(
-                child: _buildList(),
-              ),
+              _buildList(),
               Visibility(
                 visible: isLoading,
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: LoadingIndicator()
+                  child: TypingIndicator()
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    _buildInput(),
-                    _buildSubmit(),
-                  ],
-                ),
+              Row(
+                children: [
+                  _buildInput(),
+                  _buildSubmit(),
+                ],
               ),
             ],
           ),
@@ -130,7 +131,7 @@ class _ChatPageState extends State<ChatPage> {
   Expanded _buildInput() {
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.all(10),
+       margin: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(25),
@@ -200,19 +201,23 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
 
-  ListView _buildList() {
-    return ListView.builder(
-      controller: _scrollController,
-      itemCount: _messages.length,
-      itemBuilder: (context, index) {
-        var message = _messages[index];
-        return ChatMessageWidget(
-          text: message.text,
-          chatMessageType: message.chatMessageType,
-        );
-      },
+  _buildList() {
+    return Expanded(
+      child: ListView.builder(
+        controller: _scrollController,
+        itemCount: _messages.length,
+        itemBuilder: (context, index) {
+          var message = _messages[index];
+          return ChatMessageWidget(
+            text: message.text,
+            chatMessageType: message.chatMessageType,
+            isUserMessage: message.chatMessageType == ChatMessageType.user,
+          );
+        },
+      ),
     );
   }
+
 
   void _scrollDown() {
     _scrollController.animateTo(
@@ -224,47 +229,35 @@ class _ChatPageState extends State<ChatPage> {
 }
 
 class ChatMessageWidget extends StatelessWidget {
-  const ChatMessageWidget(
-      {super.key, required this.text, required this.chatMessageType});
+  const ChatMessageWidget({
+    Key? key,
+    required this.text,
+    required this.chatMessageType,
+    required this.isUserMessage,
+  }) : super(key: key);
 
   final String text;
   final ChatMessageType chatMessageType;
+  final bool isUserMessage;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(30),
-        color: chatMessageType == ChatMessageType.bot ? kChatBot : kChatUser,
-      ),
-      margin: const EdgeInsets.symmetric(vertical: 10.0),
       padding: const EdgeInsets.all(16),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Container(
-                  padding: const EdgeInsets.all(8.0),
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                  ),
-                  child: Text(
-                    text,
-                    textAlign: TextAlign.justify,
-                    style: const TextStyle(
-                        color: Colors.black87,
-                        fontSize: 17,
-                        fontWeight: FontWeight.w400),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      decoration: BoxDecoration(
+        color: isUserMessage ? kChatUser : kChatBot,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.w400,
+          color: isUserMessage ? Colors.black : Colors.white,
+        ),
       ),
     );
   }
 }
+

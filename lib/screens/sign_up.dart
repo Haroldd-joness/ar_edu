@@ -97,16 +97,16 @@ class _RegisterState extends State<Register> {
                         ///form validation
                         onTap: () async {
                           if (_formKey.currentState!.validate()) {
-                            final message = await createAccount(
-                                email: _emailController.text,
-                                password: _passwordController.text
+                            final message = await AuthService().createAccount(
+                                email: _emailController.text.trim(),
+                                password: _passwordController.text.trim()
                             );
-                            if (message!.contains('success')) {
+                            if (message != null && message.contains('success')) {
                               Navigator.pushReplacementNamed(
                                   context, '/homePage');
                             }
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(message),
+                              content: Text(message ?? 'An error occured'),
                             ));
                           }
                         },

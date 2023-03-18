@@ -73,5 +73,5 @@ var kLogin = GoogleFonts.poppins(
 
 ///chat background
 const kChatBot = Color(0xFF1DA1F2);
-const kChatBackground = Color(0Xfff4f3ff);
-const kChatUser = Color(0XFFFFFFFF);
+const kChatBackground = Color(0Xffffffff);
+const kChatUser = Color(0Xfff4f3ff);

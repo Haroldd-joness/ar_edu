@@ -1,10 +1,11 @@
 import 'package:ar_edu/constants%20/constants.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import '../models /chat_model.dart';
-
+import 'loading_indicator.dart';
 
 const backgroundColor = Color(0xff343541);
 const botBackgroundColor = Color(0xff444654);
@@ -58,16 +59,32 @@ class _ChatPageState extends State<ChatPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 80,
-        title: const Padding(
-          padding: EdgeInsets.all(5),
-          child: Text(
-            "OpenAI's ChatGPT Flutter Example \n@ngjunya",
-            maxLines: 2,
-            textAlign: TextAlign.center,
+        toolbarHeight: 75,
+        backgroundColor: kPriColor,
+        elevation: 2,
+        title: Padding(
+          padding: const EdgeInsets.all(15),
+          child: Row(
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(35),
+                  color: Colors.white,
+                ),
+                child: Image.asset(
+                  'assets/images/icon.png',
+                  width: 45,
+                ),
+              ),
+              const SizedBox(width: 10),
+              const Text("Virtual Assistant ",
+                  style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                      fontSize: 15))
+            ],
           ),
         ),
-        backgroundColor: kBackgroundPrimary,
       ),
       backgroundColor: kChatBackground,
       body: SafeArea(
@@ -82,9 +99,7 @@ class _ChatPageState extends State<ChatPage> {
                 visible: isLoading,
                 child: const Padding(
                   padding: EdgeInsets.all(8.0),
-                  child: CircularProgressIndicator(
-                    color: Colors.white,
-                  ),
+                  child: LoadingIndicator()
                 ),
               ),
               Padding(
@@ -108,61 +123,78 @@ class _ChatPageState extends State<ChatPage> {
       visible: !isLoading,
       child: Container(
         color: botBackgroundColor,
-        child: IconButton(
-          icon: const Icon(
-            Icons.send_rounded,
-            color: Color.fromRGBO(142, 142, 160, 1),
-          ),
-          onPressed: () async {
-            setState(
-                  () {
-                _messages.add(
-                  ChatMessage(
-                    text: _textController.text,
-                    chatMessageType: ChatMessageType.user,
-                  ),
-                );
-                isLoading = true;
-              },
-            );
-            var input = _textController.text;
-            _textController.clear();
-            Future.delayed(const Duration(milliseconds: 50))
-                .then((_) => _scrollDown());
-            generateResponse(input).then((value) {
-              setState(() {
-                isLoading = false;
-                _messages.add(
-                  ChatMessage(
-                    text: value,
-                    chatMessageType: ChatMessageType.bot,
-                  ),
-                );
-              });
-            });
-            _textController.clear();
-            Future.delayed(const Duration(milliseconds: 50))
-                .then((_) => _scrollDown());
-          },
-        ),
       ),
     );
   }
 
   Expanded _buildInput() {
     return Expanded(
-      child: TextField(
-        textCapitalization: TextCapitalization.sentences,
-        style: const TextStyle(color: Colors.white),
-        controller: _textController,
-        decoration: const InputDecoration(
-          fillColor: botBackgroundColor,
-          filled: true,
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(25),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                controller: _textController,
+                textCapitalization: TextCapitalization.sentences,
+                decoration: const InputDecoration(
+                  hintText: 'Type a message...',
+                  border: InputBorder.none,
+                  contentPadding:
+                      EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () async {
+                setState(
+                  () {
+                    _messages.add(
+                      ChatMessage(
+                        text: _textController.text,
+                        chatMessageType: ChatMessageType.user,
+                      ),
+                    );
+                    isLoading = true;
+                  },
+                );
+                var input = _textController.text;
+                _textController.clear();
+                Future.delayed(const Duration(milliseconds: 50))
+                    .then((_) => _scrollDown());
+                generateResponse(input).then((value) {
+                  setState(() {
+                    isLoading = false;
+                    _messages.add(
+                      ChatMessage(
+                        text: value,
+                        chatMessageType: ChatMessageType.bot,
+                      ),
+                    );
+                  });
+                });
+                _textController.clear();
+                Future.delayed(const Duration(milliseconds: 50))
+                    .then((_) => _scrollDown());
+              },
+              icon: const Icon(
+                Icons.send_rounded,
+                color: kPriColor,
+                size: 28,
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -202,19 +234,14 @@ class ChatMessageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: chatMessageType == ChatMessageType.bot
-            ? kChatBot
-            : kChatUser,
-
+        borderRadius: BorderRadius.circular(30),
+        color: chatMessageType == ChatMessageType.bot ? kChatBot : kChatUser,
       ),
       margin: const EdgeInsets.symmetric(vertical: 10.0),
       padding: const EdgeInsets.all(16),
-
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,10 +255,9 @@ class ChatMessageWidget extends StatelessWidget {
                     text,
                     textAlign: TextAlign.justify,
                     style: const TextStyle(
-                      color: Colors.black87,
-                      fontSize: 17,
-                    )
-                    ,
+                        color: Colors.black87,
+                        fontSize: 17,
+                        fontWeight: FontWeight.w400),
                   ),
                 ),
               ],
@@ -242,4 +268,3 @@ class ChatMessageWidget extends StatelessWidget {
     );
   }
 }
-

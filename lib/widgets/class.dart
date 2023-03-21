@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:ar_edu/models%20/topic_models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -12,8 +15,6 @@ class Class extends StatefulWidget {
 }
 
 class _ClassState extends State<Class> {
-  int _currentIndex = 0;
-  final List<String> _topics = [    'Animals',    'Nature',    'History',    'Architecture',    'Art',    'Science', 'Biology', 'Geography' ];
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class _ClassState extends State<Class> {
         title: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            "Your classes",
+            "All Topics",
             style: kClasses,
           ),
         ),
@@ -71,38 +72,44 @@ class _ClassState extends State<Class> {
             crossAxisSpacing: 16.0,
             mainAxisSpacing: 16.0,
           ),
-          itemCount: _topics.length,
+          itemCount: Topics.samples.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {},
-              child: Card(
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Image.asset(
-                    //   'assets/images/${_topics[index].toLowerCase()}.png',
-                    //   width: 64,
-                    //   height: 64,
-                    // ),
-                    const SizedBox(height: 8.0),
-                    Text(
-                      _topics[index],
-                      style: const TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              child: buildCard(Topics.samples[index], index)
             );
           },
         ),
       ),
     );
   }
+static  const List<Color> kCardColor = [kIconText, kButtonPrimary, kButtonSecondary, kPriColor];
+
+  Widget buildCard(Topics topics, int index){
+    return Container(
+
+      //elevation: 2,
+      decoration: BoxDecoration(
+        color: kCardColor[index % kCardColor.length],
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image(width: 130, image: AssetImage(
+            topics.imageUrl,
+          ),),
+          const SizedBox(height: 8.0),
+          Text(
+            topics.label,
+            style: const TextStyle(
+              fontSize: 16.0,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
 }

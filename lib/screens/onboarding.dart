@@ -3,7 +3,7 @@ import 'package:ar_edu/widgets/on_boarding_contents.dart';
 import 'package:flutter/material.dart';
 
 import 'package:ar_edu/constants /constants.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+
 import '../widgets/page_indicator.dart';
 import '/widgets/button.dart';
 

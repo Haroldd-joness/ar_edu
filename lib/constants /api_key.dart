@@ -1,1 +1,1 @@
-const apiKey = "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";
+const apiKey = "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";

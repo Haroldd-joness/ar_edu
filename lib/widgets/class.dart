@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:ar_edu/models%20/topic_models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../constants /constants.dart';
 
@@ -83,7 +84,7 @@ class _ClassState extends State<Class> {
       ),
     );
   }
-static  const List<Color> kCardColor = [kIconText, kButtonPrimary, kButtonSecondary, kPriColor];
+static  const List<Color> kCardColor = [kCardBlue, kCardNavy, kCardPink, kCardYellow];
 
   Widget buildCard(Topics topics, int index){
     return Container(
@@ -102,9 +103,10 @@ static  const List<Color> kCardColor = [kIconText, kButtonPrimary, kButtonSecond
           const SizedBox(height: 8.0),
           Text(
             topics.label,
-            style: const TextStyle(
-              fontSize: 16.0,
-              fontWeight: FontWeight.w500,
+            style:  GoogleFonts.poppins(
+              fontSize: 18.0,
+              color: kSecondaryTextColor,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],

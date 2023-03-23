@@ -8,6 +8,11 @@ const kPriColor = Color(0xFF1DA1F2);
 const kIconText = Color(0xFF051831);
 const kSecondaryColor = Color(0xFFFDE69E);
 
+///Card color
+const kCardBlue = Color(0xFF36A7DB);
+const kCardNavy = Color(0xFF2B3984);
+const kCardPink = Color(0xFFDE407D);
+const kCardYellow = Color(0xFFF6B22B);
 ///Background color
 const kBackgroundPrimary = Color(0xFFF8FAFD);
 const kBackgroundSecondary = Color(0xFFF8FAFD);

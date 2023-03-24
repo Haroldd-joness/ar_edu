@@ -1,8 +1,10 @@
+import 'package:ar_edu/screens/ar_view.dart';
 import 'package:ar_edu/screens/home_page.dart';
 import 'package:ar_edu/screens/login.dart';
 import 'package:ar_edu/screens/onboarding.dart';
 import 'package:ar_edu/screens/sign_up.dart';
 import 'package:ar_edu/screens/splash_screen.dart';
+import 'package:arcore_flutter_plugin/arcore_flutter_plugin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +20,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ArCoreController arCoreController;
+
     return  MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AR EDU',
@@ -28,6 +32,7 @@ class MyApp extends StatelessWidget {
         '/homePage': (context) => const HomeScreen(),
         '/login': (context) => const LoginScreen(),
         '/register': (context) => const Register(),
+        '/ARCore': (context) =>  const ARCore(),
       },
     );
 

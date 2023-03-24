@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:ar_edu/models%20/topic_models.dart';
+import 'package:ar_edu/screens/ar_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,7 +77,7 @@ class _ClassState extends State<Class> {
           itemCount: Topics.samples.length,
           itemBuilder: (context, index) {
             return GestureDetector(
-              onTap: () {},
+              onTap: () => Navigator.pushNamed(context, '/ARCore'),
               child: buildCard(Topics.samples[index], index)
             );
           },
